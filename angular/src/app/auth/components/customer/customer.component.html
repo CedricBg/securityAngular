@@ -1,0 +1,18 @@
+<div id="body">
+  <div class="box">
+    <div class="title-box">
+      <p class="titre">Security company</p>
+      <p class="ptitle">Accès clients</p>
+    </div>
+    <div class="form-box">
+      <form [formGroup]="myformGroup" (ngSubmit)="Login()">
+        <input type="text" placeholder="Login" formControlName="login">
+        <p class="error" *ngIf="myformGroup.controls['login'].invalid && myformGroup.controls['login'].touched">Le login est requis</p>
+        <input type="password" placeholder="Password" formControlName="password">
+        <p class="error" *ngIf="myformGroup.controls['password'].invalid && myformGroup.controls['password'].touched ">Le mot de passe est requis</p>
+        <button type="submit" [disabled]="myformGroup.invalid">Log in</button>
+        <p>Mot de passe oublié ? <br>Contactez nous au 055 555 555</p>
+      </form>
+    </div>
+  </div>
+</div>
