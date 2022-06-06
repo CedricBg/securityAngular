@@ -6,18 +6,19 @@ import { AppComponent } from './app.component';
 import { TieInterceptor } from './services/tie.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FourofourComponent } from './component/fourofour/fourofour.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    FourofourComponent
+    FourofourComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    SharedModule,
   ],
   providers: [{provide : HTTP_INTERCEPTORS, useClass : TieInterceptor, multi : true}],
   bootstrap: [AppComponent]

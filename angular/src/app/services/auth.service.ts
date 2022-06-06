@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { connection } from '../models/connection.model';
-import { token } from '../models/token.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,10 @@ import { token } from '../models/token.model';
 export class AuthService {
   currentUser!: connection
   _isConnected! :boolean
-  theToken! : token
+  theToken! : string
+  helper = new JwtHelperService();
+  i : number = 0
+  b! : string
   get isConnected() : boolean{
     return localStorage.getItem('isConnected') == 'true' ? true : false
   }
@@ -24,21 +27,23 @@ export class AuthService {
   }
   constructor(private _client : HttpClient, private _router : Router) { }
   LoginCustomer(user : connection){
-  this._client.post<token>(environment.baseAdres+ 'Auth/customer/login', user).subscribe({
-  next : (data : token)=>{
-    this.theToken = data
-    console.log(this.theToken)
-
-      //if (this.currentUser !=null && this.currentUser.isActive){
-        //this.currentUser.Password = data['password'].toString()
-       // this.currentUser.Login = data['login'].toString()
+  this._client.post<string>(environment.baseAdres+ 'Auth/customer/login', user).subscribe({
+  next : (data : string)=>{
+    if(data != null && sessionStorage.getItem('1') == null ){
+      const decodedToken = this.helper.decodeToken(data)
+      sessionStorage.setItem('token', data)
+      for (const prop in decodedToken){
+        this.i++
+        this.b = this.i.toString()
+        console.log(sessionStorage.setItem(this.b,`${decodedToken[prop]}`))
+      }
+      if (sessionStorage.getItem('5') == 'true'){
         this._isConnected = true
-        //sessionStorage.setItem('token', data)
-        //sessionStorage.setItem('isConnected', this._isConnected.toString())
-        //sessionStorage.setItem('user', JSON.stringify(this.currentUser))
-        this._router.navigate(['./administration/admin'])
-        this.emitIsConnected()
-     // }
+
+        //this._router.navigate(['./administration/admin'])
+          this.emitIsConnected()
+        }
+      }
     }
   })
 }
@@ -53,23 +58,25 @@ export class AuthService {
 
 
     LoginEmployee(user : connection){
-      this._client.post<token>(environment.baseAdres+ 'Auth/employee/login', user).subscribe({
-      next : (data : token)=>{
-        this.theToken = data
-        console.log(this.theToken)
-
-          //if (this.currentUser !=null && this.currentUser.isActive){
-            //this.currentUser.Password = data['password'].toString()
-          // this.currentUser.Login = data['login'].toString()
+      this._client.post<string>(environment.baseAdres+ 'Auth/employee/login', user).subscribe({
+      next : (data : string)=>{
+        if(data != null && sessionStorage.getItem('1') == null ){
+          const decodedToken = this.helper.decodeToken(data)
+          sessionStorage.setItem('token', data)
+          for (const prop in decodedToken){
+            this.i++
+            this.b = this.i.toString()
+            console.log(sessionStorage.setItem(this.b,`${decodedToken[prop]}`))
+          }
+          if (sessionStorage.getItem('5') == 'true'){
             this._isConnected = true
-            //sessionStorage.setItem('token', data)
-            //sessionStorage.setItem('isConnected', this._isConnected.toString())
-            //sessionStorage.setItem('user', JSON.stringify(this.currentUser))
-            this._router.navigate(['./administration/admin'])
+
+            //this._router.navigate(['./administration/admin'])
             this.emitIsConnected()
-        // }
+          }
         }
-      })
+      }
+    })
   }
   LogoutEmployee(){
     this._router.navigate(['./'])
