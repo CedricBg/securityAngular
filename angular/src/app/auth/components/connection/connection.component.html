@@ -5,10 +5,12 @@
         <p class="ptitle">Accès employée</p>
       </div>
       <div class="form-box">
-        <form action="#">
-          <input type="text" placeholder="Login">
-          <input type="password" placeholder="Password">
-          <button type="button">Log in</button>
+        <form [formGroup]="myformGroup" (ngSubmit)="Login()" >
+          <input type="text" placeholder="Login" formControlName="login">
+          <p class="error" *ngIf="myformGroup.controls['login'].invalid && myformGroup.controls['login'].touched"></p>
+          <input type="password" placeholder="Password" formControlName="password">
+          <p class="error" *ngIf="myformGroup.controls['password'].invalid && myformGroup.controls['password'].touched ">Le mot de passe est requis</p>
+          <button type="submit" [disabled]="myformGroup.invalid">Log in</button>
           <p>Mot de passe oublié ? <br>Contactez le service IT</p>
         </form>
       </div>

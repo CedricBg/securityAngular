@@ -17,22 +17,17 @@ export class AuthService {
     return localStorage.getItem('isConnected') == 'true' ? true : false
   }
 
-
   isConnectedSubject : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isConnected)
 
   emitIsConnected(){
     this.isConnectedSubject.next(this.isConnected)
   }
-
   constructor(private _client : HttpClient, private _router : Router) { }
-
-
   LoginCustomer(user : connection){
   this._client.post<token>(environment.baseAdres+ 'Auth/customer/login', user).subscribe({
   next : (data : token)=>{
     this.theToken = data
     console.log(this.theToken)
-
 
       //if (this.currentUser !=null && this.currentUser.isActive){
         //this.currentUser.Password = data['password'].toString()
@@ -54,5 +49,32 @@ export class AuthService {
     sessionStorage.clear();
     this.emitIsConnected()
   }
-}
 
+
+
+    LoginEmployee(user : connection){
+      this._client.post<token>(environment.baseAdres+ 'Auth/employee/login', user).subscribe({
+      next : (data : token)=>{
+        this.theToken = data
+        console.log(this.theToken)
+
+          //if (this.currentUser !=null && this.currentUser.isActive){
+            //this.currentUser.Password = data['password'].toString()
+          // this.currentUser.Login = data['login'].toString()
+            this._isConnected = true
+            //sessionStorage.setItem('token', data)
+            //sessionStorage.setItem('isConnected', this._isConnected.toString())
+            //sessionStorage.setItem('user', JSON.stringify(this.currentUser))
+            this._router.navigate(['./administration/admin'])
+            this.emitIsConnected()
+        // }
+        }
+      })
+  }
+  LogoutEmployee(){
+    this._router.navigate(['./'])
+    this._isConnected = false
+    sessionStorage.clear();
+    this.emitIsConnected()
+  }
+}
