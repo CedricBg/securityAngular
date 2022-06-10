@@ -1,0 +1,25 @@
+
+
+<mat-accordion  *ngFor="let user of listEmployee"  class="example-headers-align">
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{user.firstName}} {{user.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{user.role}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form >
+
+    </form>
+    <div>Phone : {{user.phone}}&nbsp; || &nbsp; Langue : {{user.language}} &nbsp; || &nbsp; Nr° de carte : {{user.securityCard}}&nbsp; </div>
+
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+
+  </mat-accordion>

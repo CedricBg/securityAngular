@@ -2,11 +2,17 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdminComponent } from './component/admin/admin.component';
+import { AgentsComponent } from './component/agents/agents.component';
+import { NavComponent } from './component/nav/nav.component';
+import { PutEmployeeComponent } from './component/put-employee/put-employee.component';
 
 
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
+    AgentsComponent,
+    NavComponent,
+    PutEmployeeComponent,
   ],
   imports: [
     SharedModule,

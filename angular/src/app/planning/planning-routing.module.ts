@@ -4,9 +4,7 @@ import { PlanComponent } from './components/plan/plan.component';
 import { PlanningModule } from './planning.module';
 
 const routes: Routes = [
-  {path : '', redirectTo : 'planning', pathMatch : 'full'},
-  {path : 'planning' , component : PlanComponent },
-
+  {path : '', redirectTo : '404', pathMatch : 'full'},
 ];
 
 @NgModule({

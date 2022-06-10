@@ -4,16 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { connection } from 'src/app/models/connection.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { environment } from 'src/environments/environment';
-import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
-
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent implements OnInit {
 
@@ -21,7 +16,7 @@ isConnected! :boolean
 myformGroup! :FormGroup
 response! : boolean
 
-  constructor(private _serviceAuth : AuthService, private _builder : FormBuilder,private messageService: MessageService) { }
+  constructor(private _serviceAuth : AuthService, private _builder : FormBuilder) { }
 
   ngOnInit(): void {
     this.myformGroup = this._builder.group({
@@ -35,12 +30,9 @@ response! : boolean
     })
 
   }
-  showWarn() {
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: 'Message Content'});
-}
+
 
   Login(){
-    
     this._serviceAuth.LoginCustomer(this.myformGroup.value)
   }
 

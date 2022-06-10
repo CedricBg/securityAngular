@@ -1,0 +1,9 @@
+<mat-toolbar class="navi mat-elevation-z8">
+  <mat-icon>desktop_windows</mat-icon>&nbsp;<span>Administration</span>
+  <div class="spacer"></div>
+  <a routerLink="./clients" mat-button>Gestion Clients</a>
+  <a routerLink="./agents" mat-button>Gestion agents</a>
+  <a routerLink="./" mat-button>Accueil</a>
+
+  <a mat-button (click)="Logout()"><mat-icon>settings_power</mat-icon></a>
+</mat-toolbar>

@@ -9,11 +9,11 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     ConnectionComponent,
     CustomerComponent,
-    
+
   ],
   imports: [
     AuthRoutingModule,
-    SharedModule 
+    SharedModule
   ]
 })
 export class AuthModule { }
