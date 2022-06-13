@@ -9,7 +9,7 @@
       <div class="form-box">
         <form [formGroup]="myformGroup" (ngSubmit)="Login()" >
           <input type="text" placeholder="Login" formControlName="login">
-          <p class="error" *ngIf="myformGroup.controls['login'].invalid && myformGroup.controls['login'].touched"></p>
+          <p class="error" *ngIf="myformGroup.controls['login'].invalid && myformGroup.controls['login'].touched">Le Login est requis</p>
           <input type="password" placeholder="Password" formControlName="password">
           <p class="error" *ngIf="myformGroup.controls['password'].invalid && myformGroup.controls['password'].touched ">Le mot de passe est requis</p>
           <button type="submit" [disabled]="myformGroup.invalid">Log in</button>

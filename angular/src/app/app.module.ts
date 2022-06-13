@@ -11,6 +11,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { PutEmployeeComponent } from './administration/component/put-employee/put-employee.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -29,10 +32,12 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatFormFieldModule,
     SharedModule,
   ],
   providers: [{provide : HTTP_INTERCEPTORS, useClass : TieInterceptor, multi : true},
               {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents : [PutEmployeeComponent]
 })
 export class AppModule { }

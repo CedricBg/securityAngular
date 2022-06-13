@@ -1,1 +1,71 @@
-<p>put-employee works!</p>
+<form [formGroup]="formUpdate">
+<div class="former">
+
+    <input formControlName="name" formControlName="id" type="hidden">
+
+<p>
+  <mat-form-field floatLabel="auto" appearance="fill">
+    <mat-label>Nom</mat-label>
+    <input formControlName="name" matInput required>
+  </mat-form-field>
+</p>
+<p></p>
+  <mat-form-field floatLabel="auto" appearance="fill">
+    <mat-label>Prénom</mat-label>
+    <input formControlName="firstname" matInput required>
+  </mat-form-field>
+  <p>
+</p>
+  <mat-form-field floatLabel="auto" appearance="fill">
+    <mat-label>Date de naissance</mat-label>
+    <input formControlName="birthdate" type="date" matInput required >
+  </mat-form-field>
+  <p>
+</p>
+<p>
+  <mat-form-field floatLabel="auto" appearance="fill">
+    <mat-label>SecurityCard</mat-label>
+    <input matInput formControlName="securitycardnumber" required>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field floatLabel="auto" appearance="fill">
+    <mat-label>Date d'entrée en service</mat-label>
+    <input matInput formControlName="entryService" required>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field floatLabel="auto" appearance="fill">
+    <mat-label>Nr° de registre national</mat-label>
+    <input matInput formControlName="registreNational" required>
+  </mat-form-field>
+</p>
+</div>
+
+
+<div class="former">
+
+  <mat-form-field floatLabel="auto" appearance="fill">
+  <mat-label>Nr d'employée</mat-label>
+  <input matInput formControlName="employeeCardNumber" required>
+</mat-form-field>
+
+<mat-form-field floatLabel="auto" appearance="fill">
+  <mat-label>Statut</mat-label>
+  <input matInput formControlName="role" required>
+</mat-form-field>
+
+
+<mat-form-field floatLabel="auto" appearance="fill">
+  <mat-label>Pays</mat-label>
+  <input matInput formControlName="Country" required>
+</mat-form-field>
+<br>
+
+
+
+</div>
+
+
+
+</form>

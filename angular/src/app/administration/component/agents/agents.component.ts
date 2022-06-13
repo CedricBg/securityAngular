@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Employee } from 'src/app/models/employee.model';
 import { putEmployee } from 'src/app/models/putEmployee.model';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { PutEmployeeComponent } from '../put-employee/put-employee.component';
+
 
 
 @Component({
@@ -13,7 +16,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class AgentsComponent implements OnInit {
   listEmployee! : Employee[]
   constructor(
-    private _serviceEmployee : EmployeeService
+    private _serviceEmployee : EmployeeService,public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -29,9 +32,13 @@ getAll(){
     })
   }
 
-
-putEmployee(user : putEmployee){
-
-}
-
+openDialog(user : Employee) {
+  const diallogConfig = new MatDialogConfig;
+  diallogConfig.data = user
+  diallogConfig.disableClose = false;
+  diallogConfig.autoFocus = true;
+  diallogConfig.width = "75vw";
+  diallogConfig.height= "75vh";
+  const dialogRef = this.dialog.open(PutEmployeeComponent,diallogConfig);
+  }
 }
