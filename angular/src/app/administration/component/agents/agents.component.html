@@ -1,5 +1,5 @@
 
- <br>&nbsp;&nbsp;<a routerLink="../">Ajouter un agent</a><br><br>
+ <br>&nbsp;&nbsp;<a routerLink="./">Ajouter un agent</a><br><br>
  <div class="liste">
 <mat-accordion  *ngFor="let user of listEmployee"  class="example-headers-align">
   <mat-expansion-panel hideToggle>
@@ -15,7 +15,7 @@
 
     <mat-action-row>
       <button mat-button (click)="openDialog(user)" color="primary">Edit</button>
-      <button mat-button color="warn">Delete</button>
+      <button mat-button color="warn"  (click)="Delete(user.id)">Delete</button>
     </mat-action-row>
   </mat-expansion-panel>
 <hr>

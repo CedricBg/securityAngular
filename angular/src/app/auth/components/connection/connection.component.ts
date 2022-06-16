@@ -26,11 +26,7 @@ export class ConnectionComponent implements OnInit {
 
 
   Login(){
-
     this._serviceAuth.LoginEmployee(this.myformGroup.value)
-
-
-
   }
 
   Logout(){
