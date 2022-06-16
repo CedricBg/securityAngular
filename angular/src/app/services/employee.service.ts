@@ -20,7 +20,6 @@ export class EmployeeService {
     return this._httpClient.get<Employee[]>(environment.baseAdres+ 'Employee' )
   }
 
-
   putEmployee(user : Employee){
 
 

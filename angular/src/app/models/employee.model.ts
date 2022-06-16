@@ -3,7 +3,7 @@ export interface Employee
   id : number
   name : string
   firstName : string
-  birthdate : string
+  birthDate : string
   vehicle : boolean
   securityCard : number
   entryService : string

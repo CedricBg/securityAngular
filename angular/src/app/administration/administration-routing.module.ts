@@ -7,6 +7,7 @@ import { NavComponent } from './component/nav/nav.component';
 
 const routes: Routes = [
   { path : 'admin', component : AdminComponent, children : [
+    {path : '', redirectTo : 'planning', pathMatch : 'full' },
     {path : 'planning' , component : PlanComponent },
     {path : 'agents' , component : AgentsComponent },
     {path : 'nav' , component : NavComponent },
