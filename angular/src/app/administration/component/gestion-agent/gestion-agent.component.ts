@@ -6,9 +6,10 @@ import { clientplanning } from 'src/app/models/clientplanning.model';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { postPlanning } from 'src/app/models/postPlanning.model';
-import { Router } from '@angular/router';
+import { event } from 'src/app/models/event.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import frLocale from '@fullcalendar/core/locales/fr'
+import frLocale from '@fullcalendar/core/locales/fr';
 
 @Component({
   selector: 'app-gestion-agent',
@@ -16,10 +17,8 @@ import frLocale from '@fullcalendar/core/locales/fr'
   styleUrls: ['./gestion-agent.component.scss']
 })
 export class GestionAgentComponent implements OnInit {
-events : any = []
 
-
-
+  ok! : boolean
   user! :Employee
   reponse! : string | undefined
   customer! : clientplanning[]
@@ -30,12 +29,14 @@ events : any = []
   workday! : postPlanning
   _tmpStartDate! : string
   _tmpEndDate! : string
-  getDate! : postPlanning[]
+  getDate : postPlanning[] = []
   stardate! : string
   enddate! : string[]
   starttime! : string
   endtime! : string
-  array! : string[]
+  startarray! : string[]
+  endarray! : string[]
+  events: any[] = []
   get tmpStartDate() : string {
     if(this._tmpStartDate!= null) this.isEndDateVisible = true
     return this._tmpStartDate
@@ -46,7 +47,7 @@ events : any = []
   }
 
   constructor(
-    private _planningService : PlanningService, private _builder : FormBuilder, private _route :  Router,private _snackBar: MatSnackBar
+    private _planningService : PlanningService, private _builder : FormBuilder, private _route :  Router,private activatedRoute: ActivatedRoute, private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -60,13 +61,12 @@ events : any = []
     })
 
      this._planningService.GetDate(this.user.id).subscribe({
-      next : async (data : postPlanning[]) =>{
-        this.getDate = await data
+      next : (data : postPlanning[]) =>{
+        this.getDate = data
         this.allDates()
+
       }
     })
-
-
 
     this.formclient = this._builder.group({
       Customer : ['',Validators.required],
@@ -76,7 +76,6 @@ events : any = []
 
   }
 
-
 SelectCutom(){
   this.workday = this.formclient.value
   this.workday.idEmployee = this.user.id
@@ -84,40 +83,38 @@ SelectCutom(){
   this.workday.startTime = this.tmpStartDate
   this._planningService.PostDate(this.workday)
   this.openSnackBar()
-  this._route.navigate(['../administration/admin'])
+  this._route.navigateByUrl('../administration/admin/planningagent/planning')
 }
-
 allDates(){
-  console.log(this.getDate)
+  console.log(this.getDate.length)
   for(let elt in this.getDate){
-    this.array = this.getDate[elt].startTime.split(" ")
+    this.startarray = this.getDate[elt].startTime.split(" ")
+    this.endarray = this.getDate[elt].endTime.split(" ")         //console.log()
+    console.log(this.endarray[0])
+    console.log(this.endarray[1])
+    //console.log(this.getDate[elt].startTime)
+    //console.log(this.getDate[elt].endTime)
+    //console.log(this.getDate[elt].customer)
 
-    console.log(this.array[0])
-    console.log(this.array[1])
-    this.events = [
-      { title: this.getDate[elt].customer , date : this.array[0].toString() },
-      { title: this.array[1] , date : this.array[0].toString() },
+    this.events.push(
 
-      //{ title: '08:00 End', date: '2022-06-01' },
-    ]
+      { title: this.startarray[1]+' '+this.getDate[elt].customer , date: this.startarray[0] },
+      { title:  this.endarray[1] , date:  this.endarray[0] },
 
-
-    console.log(this.getDate[elt].startTime)
-    console.log(this.getDate[elt].endTime)
-    console.log(this.getDate[elt].customer)
-
+    );
   }
-  console.log(this.events)
+
+ this.ok = true //on ne charge le calendrier dans le html que quand on les dnnées
 }
 
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    locale : frLocale,
-    dateClick: this.handleDateClick.bind(this),
-    events: this.events,
+calendarOptions: CalendarOptions = {
+  initialView: 'dayGridMonth',
+  locale : frLocale,
+  dateClick: this.handleDateClick.bind(this),
+  events: this.events,
+};
 
 
-  };
   handleDateClick(arg: any) {
     this.reponse = arg.dateStr +" "+ prompt("Entrez l'heure pour "+ arg.dateStr , "00:00" )
     if(this.start == true){
@@ -127,8 +124,9 @@ allDates(){
     else
       this._tmpEndDate = this.reponse
   }
-  openSnackBar() {
 
+
+  openSnackBar() {
     this._snackBar.open('La date à bien été ajouté','X'), {
       duration: 20
     }
