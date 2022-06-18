@@ -19,8 +19,10 @@ export class EmployeeService {
   }
 
   putEmployee(user : Employee){
-    return this._httpClient.post<Employee>(environment.baseAdres+ 'Employee', user)
+    console.log(user)
+    return this._httpClient.put<Employee>(environment.baseAdres+ 'Employee', user)
     }
+
   Delete(id: number){
   return this._httpClient.delete(environment.baseAdres+ 'employee/'+id)
   }

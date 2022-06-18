@@ -1,0 +1,36 @@
+<h1>Bienvenue sur le planning de {{user.name}}</h1>
+<div class="select">
+  <form [formGroup]="formclient" (ngSubmit)="SelectCutom()">
+
+
+
+
+    <mat-form-field >
+      <mat-label>Client ou l'agent sera affecté</mat-label>
+      <input matInput [matAutocomplete]="auto" formControlName="Customer"  required>
+        <mat-autocomplete #auto="matAutocomplete" >
+          <mat-option *ngFor="let elt of customer" [value]="elt.name">
+            {{elt.name}}
+          </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <br>
+    <mat-form-field >
+      <mat-label>Heure début de service</mat-label>
+      <input matInput formControlName="startTime"  [value]="tmpStartDate">
+    </mat-form-field>
+<br>
+    <mat-form-field *ngIf="isEndDateVisible" >
+      <mat-label>Heure fin de service</mat-label>
+      <input matInput formControlName="endTime" value="{{tmpEndDate}}" [value]="tmpEndDate">
+    </mat-form-field>
+<br>
+
+    <input type="submit" value="Séléctionner">
+  </form>
+</div>
+<div class="calendar">
+
+  <full-calendar [options]="calendarOptions"></full-calendar>
+
+</div>

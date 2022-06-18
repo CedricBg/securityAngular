@@ -2,7 +2,7 @@ import { TownService } from './../../../services/town.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/services/employee.service';
 import {FloatLabelType} from '@angular/material/form-field';
@@ -31,7 +31,7 @@ export class PutEmployeeComponent implements OnInit {
   stat! : statut[]
 
   filteredOptions! : Observable<Ville[]>
-  constructor(private _serviceEmployee : EmployeeService, private _serviceTown : TownService , private _builder : FormBuilder, private _activatedRoute : ActivatedRoute,
+  constructor(private _serviceEmployee : EmployeeService, private _serviceTown : TownService , private _builder : FormBuilder, private _activatedRoute : ActivatedRoute,private _router : Router,
     private dialogRef: MatDialogRef<PutEmployeeComponent>,
         @Inject(MAT_DIALOG_DATA) data : Employee
     ){
@@ -40,14 +40,13 @@ export class PutEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.initForm()
+
 
     this._serviceTown.getAllCountrys().subscribe({
       next : async (data : any) => {
           this.country = await data
       }
     })
-
     this._serviceTown.getAll().subscribe({
       next : async (data : any) => {
           this.town = await data
@@ -56,15 +55,14 @@ export class PutEmployeeComponent implements OnInit {
     this._serviceTown.getAllDept().subscribe({
       next : async (data : any) => {
           this.dept = await data
-          console.log(this.dept)
       }
     })
     this._serviceTown.getAllStatut().subscribe({
       next : async (data : any) => {
         this.stat = await  data
-        console.log(this.stat)
       }
     })
+    this.initForm()
   }
 
 
@@ -92,6 +90,14 @@ export class PutEmployeeComponent implements OnInit {
   }
 
   PutEmployee(){
-    this._serviceEmployee.putEmployee(this.formUpdate.value).subscribe()
+    this._serviceEmployee.putEmployee(this.formUpdate.value).subscribe({
+      next : () =>{
+        this.redirectTo('./administration/admin/agents')
+      }
+    })
   }
+  redirectTo(uri:string){
+    this._router.navigateByUrl('./', {skipLocationChange: true}).then(()=>
+    this._router.navigate([uri]));
+ }
 }

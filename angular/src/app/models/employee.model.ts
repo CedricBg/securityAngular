@@ -5,7 +5,7 @@ export interface Employee
   firstName : string
   birthDate : string
   vehicle : boolean
-  securityCard : number
+  securityCard : bigint
   entryService : string
   employeeCardNumber : string
   registreNational : string

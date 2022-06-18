@@ -4,8 +4,9 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { PlanningService } from 'src/app/services/planning.service';
 import { PutEmployeeComponent } from '../put-employee/put-employee.component';
-
+import { GestionAgentComponent } from '../gestion-agent/gestion-agent.component';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { PutEmployeeComponent } from '../put-employee/put-employee.component';
 export class AgentsComponent implements OnInit {
   listEmployee! : Employee[]
   constructor(
-    private _serviceEmployee : EmployeeService,public dialog: MatDialog,private _router : Router
+    private _serviceEmployee : EmployeeService,public dialog: MatDialog,private _router : Router, private _planningService : PlanningService
   ) { }
 
   ngOnInit(): void {
@@ -46,12 +47,17 @@ openDialog(user : Employee) {
     this._serviceEmployee.Delete(id).subscribe({
     next : ()=>{
       this.redirectTo('./administration/admin/agents')
-    }
-
+      }
     })
   }
-  redirectTo(uri:string){
-    this._router.navigateByUrl('./', {skipLocationChange: true}).then(()=>
-    this._router.navigate([uri]));
- }
+
+ redirectTo(uri:string){
+  this._router.navigateByUrl('./', {skipLocationChange: true}).then(()=>
+  this._router.navigate([uri]));
+}
+
+planning(user : Employee){
+  this._planningService.saveData(user)
+  this._router.navigate(['./administration/admin/planningagent'])
+}
 }

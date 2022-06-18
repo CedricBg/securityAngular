@@ -86,7 +86,7 @@
       <mat-label>Statut</mat-label>
       <input matInput [matAutocomplete]="autostatut" formControlName="role"  required>
         <mat-autocomplete #autostatut="matAutocomplete" >
-          <mat-option *ngFor="let elt of stat"  [value]="elt.classeName +' '+elt.classe">
+          <mat-option *ngFor="let elt of stat"  [value]="elt.classeName">
             {{elt.classeName}} {{elt.classe}}
           </mat-option>
         </mat-autocomplete>
@@ -120,7 +120,7 @@
       <input formControlName="birthDate" matInput required >
     </mat-form-field>
 
-    <button>Appliquer</button>
+    <button type="submit">Appliquer</button>
   </form>
 </div>
 
