@@ -20,7 +20,7 @@ export class GestionAgentComponent implements OnInit {
 
   ok! : boolean
   user! :Employee
-  reponse! : string | undefined
+  reponse! : string
   customer! : clientplanning[]
   formclient! : FormGroup
   SelectedCustomer! : string
@@ -64,16 +64,14 @@ export class GestionAgentComponent implements OnInit {
       next : (data : postPlanning[]) =>{
         this.getDate = data
         this.allDates()
-
       }
     })
 
     this.formclient = this._builder.group({
       Customer : ['',Validators.required],
-      startTime : [''],
-      endTime : ['']
+      startTime : ['',Validators.required],
+      endTime : []
     })
-
   }
 
 SelectCutom(){
@@ -81,21 +79,20 @@ SelectCutom(){
   this.workday.idEmployee = this.user.id
   this.workday.endTime = this.tmpEndDate
   this.workday.startTime = this.tmpStartDate
+  if(!this.formclient.invalid){
   this._planningService.PostDate(this.workday)
+  this._route.navigateByUrl('administration/admin')
   this.openSnackBar()
-  this._route.navigateByUrl('../administration/admin/planningagent/planning')
+    }
 }
+
 allDates(){
   console.log(this.getDate.length)
   for(let elt in this.getDate){
     this.startarray = this.getDate[elt].startTime.split(" ")
-    this.endarray = this.getDate[elt].endTime.split(" ")         //console.log()
+    this.endarray = this.getDate[elt].endTime.split(" ")
     console.log(this.endarray[0])
     console.log(this.endarray[1])
-    //console.log(this.getDate[elt].startTime)
-    //console.log(this.getDate[elt].endTime)
-    //console.log(this.getDate[elt].customer)
-
     this.events.push(
 
       { title: this.startarray[1]+' '+this.getDate[elt].customer , date: this.startarray[0] },

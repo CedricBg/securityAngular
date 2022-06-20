@@ -1,10 +1,7 @@
 <h1>Bienvenue sur le planning de {{user.name}}</h1>
-<div class="select">
+<div class="grid">
+  <div class="col-offset-1">
   <form [formGroup]="formclient" (ngSubmit)="SelectCutom()">
-
-
-
-
     <mat-form-field >
       <mat-label>Client ou l'agent sera affecté</mat-label>
       <input matInput [matAutocomplete]="auto" formControlName="Customer"  required>
@@ -12,25 +9,29 @@
           <mat-option *ngFor="let elt of customer" [value]="elt.name">
             {{elt.name}}
           </mat-option>
+          <p class="error" *ngIf="formclient.controls['Customer'].invalid && formclient.controls['Customer'].touched ">Le client est requis</p>
         </mat-autocomplete>
+
     </mat-form-field>
     <br>
     <mat-form-field >
       <mat-label>Heure début de service</mat-label>
       <input matInput formControlName="startTime"  [value]="tmpStartDate">
+      <p class="error" *ngIf="formclient.controls['startTime'].invalid && formclient.controls['startTime'].touched ">L'heure de départ est requise</p>
     </mat-form-field>
 <br>
     <mat-form-field *ngIf="isEndDateVisible" >
       <mat-label>Heure fin de service</mat-label>
       <input matInput formControlName="endTime" value="{{tmpEndDate}}" [value]="tmpEndDate">
+      <p class="error" *ngIf="formclient.controls['endTime'].invalid && formclient.controls['endTime'].touched ">L'heure de fin est requise</p>
     </mat-form-field>
 <br>
-
-    <input type="submit" value="Séléctionner">
+ <input type="submit" value="Séléctionner">
   </form>
 </div>
-<div class="calendar" *ngIf="ok">
-
-  <full-calendar [options]="calendarOptions"></full-calendar>
-
+  <div class="col-offset-1">
+    <div class="calendar" *ngIf="ok">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+</div>
 </div>
